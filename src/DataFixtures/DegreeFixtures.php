@@ -25,6 +25,8 @@ class DegreeFixtures extends Fixture
             $entity = new Degree();
             $entity -> setName($degreeName);
             $manager -> persist($entity);
+
+            $this -> addReference("Degree_$index", $entity);
         }
 
         $manager->flush();
