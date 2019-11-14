@@ -21,16 +21,24 @@ class PromotionFixtures extends BaseFixture implements DependentFixtureInterface
     {
         $degrees = $this ->getReferences('Degree');
         $years   = $this -> getReferences('Year');
-//        $compteur = 0;
+
+       $index = 0;
+
         foreach ($degrees as $degree) {
             foreach ($years as $year) {
                 $promotion = new Promotion();
                 $promotion -> setDegree($degree);
                 $promotion -> setYear($year);
-//                $this -> addReference('Promotion_' . $compteur, $promotion );
                 $manager -> persist($promotion);
-//                $compteur ++;
+
+                $this -> addReference("Promotion_$index", $promotion);
+                $index ++;
+
             }
+
+//            $degrees = $this -> getReferences('Degree');
+//            $years   = $this -> getReferences('Year');
+//        dd($years);
 
         }
 

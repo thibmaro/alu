@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Promotion;
+use App\Entity\User;
 use App\Service\Avatar\SvgAvatarFactory;
 use App\Service\Helpers\FileSystemHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -49,13 +50,16 @@ class UserFixtures extends BaseFixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
+        $user = new User();
+
        /* firstname : */ $user -> setFirstname($faker -> firstName);
        /* lastname  : */ $user -> setLastname($faker -> lastName);
        /* email     : */ $user -> setEmail($faker -> email);
        /* city      : */ $user -> setCity($faker -> city);
        /* password  : */ $user -> setPassword(password_hash($faker -> password, PASSWORD_DEFAULT));
-       /* birthdate : */ $date = rand(1950, 2000).'-'.$faker ->dayOfMonth;
+       /* birthdate : */ $date = rand(1950, 2000).'-'.$faker ->month.'-'.$faker -> dayOfMonth;
                          $user -> setBirthdate(new \DateTime($date));
+
 
         $svg = $this -> svgAvatarFactory -> getAvatar(2, 5);
         $filename = sha1(uniqid(rand())) . '.svg';
@@ -63,22 +67,19 @@ class UserFixtures extends BaseFixture implements DependentFixtureInterface
         $this -> fileSystemHelper -> write($filePath, $svg);
         $user -> setAvatar($filename);
 
-        $index = 0;
 
-        foreach ($degrees as $degree) {
-            foreach ($years as $year) {
-                $promotion = new Promotion();
-                $promotion -> setDegree($degree);
-                $promotion -> setYear($year);
-                $manager -> persist($promotion);
 
-                $this -> addReference("Promotion_$index", $promotion);
-                $index ++;
+                $promotions = $this -> getReferences('Promotion');
+                $promotions = $faker -> randomElements($promotions, rand(1, 2));
 
-            }
-        }
+                foreach ($promotions as $promotion) {
+                    $user -> addPromotion($promotion);
+                }
+//                $manager -> persist($promotion);
+//                dd($promotions);
 
-        $manager->flush();
+
+
+//        $manager->flush();
     }
-
 }
