@@ -21,7 +21,7 @@
     <select id="year" name="year">
         <option value="">Toutes les années</option>
         {% for year in years %}
-            <option value=""{{ year.id }}">{{ year.title }}</option>
+            <option value="{{ year.id }}">{{ year.title }}</option>
         {% endfor %}
     </select>
 

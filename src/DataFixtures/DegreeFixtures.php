@@ -10,8 +10,7 @@ class DegreeFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
+
         $degrees = [
           'Aptitude à la manipulation des fluides frigorigènes',
           'ASR - Attestation de Sécurité Routière',
