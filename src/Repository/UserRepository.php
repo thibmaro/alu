@@ -19,6 +19,20 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    function search($degree = "", $year = "")
+    {
+       $qb = $this -> createQueryBuilder('u');
+
+       if ($degree || $year) {
+           $qb -> innerJoin('u.promotions', 'p');
+       }
+
+       if ($degree) {
+           $qb
+               ->andWhere('p.degree = :degree_id')
+               ->setParameter('degree_id', $degree);
+       }
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

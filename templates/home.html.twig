@@ -8,25 +8,25 @@
 
 {% block body %}
 
-<form action="{{ path('home.index') }}" method="post">
-    <label for="degree">Formation</label>
-    <select id="degree" name="degree">
-        <option value="">Toutes les formations</option>
-        {% for degree in degrees %}
-            <option value="{{ degree.id }}">{{ degree.name }}</option>
-        {% endfor %}
-    </select>
+    <form action="{{ path('home.index') }}" method="post">
+        <label for="degree">Formation</label>
+        <select id="degree" name="degree">
+            <option value="">Toutes les formations</option>
+            {% for degree in degrees %}
+                <option value="{{ degree.id }}">{{ degree.name }}</option>
+            {% endfor %}
+        </select>
 
-    <label for="year">Formation</label>
-    <select id="year" name="year">
-        <option value="">Toutes les années</option>
-        {% for year in years %}
-            <option value="{{ year.id }}">{{ year.title }}</option>
-        {% endfor %}
-    </select>
+        <label for="year">Formation</label>
+        <select id="year" name="year">
+            <option value="">Toutes les années</option>
+            {% for year in years %}
+                <option value="{{ year.id }}">{{ year.title }}</option>
+            {% endfor %}
+        </select>
 
-    <input type="submit" value="Rechercher">
-</form>
+        <input type="submit" value="Rechercher">
+    </form>
 
 {% endblock %}
 
