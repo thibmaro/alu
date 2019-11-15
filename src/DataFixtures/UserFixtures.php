@@ -50,36 +50,34 @@ class UserFixtures extends BaseFixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        $user = new User();
+        for ($i = 0; $i < 100; $i ++) {
+            $user = new User();
+            $manager -> persist($user);
 
-       /* firstname : */ $user -> setFirstname($faker -> firstName);
-       /* lastname  : */ $user -> setLastname($faker -> lastName);
-       /* email     : */ $user -> setEmail($faker -> email);
-       /* city      : */ $user -> setCity($faker -> city);
-       /* password  : */ $user -> setPassword(password_hash($faker -> password, PASSWORD_DEFAULT));
-       /* birthdate : */ $date = rand(1950, 2000).'-'.$faker ->month.'-'.$faker -> dayOfMonth;
-                         $user -> setBirthdate(new \DateTime($date));
-
-
-        $svg = $this -> svgAvatarFactory -> getAvatar(2, 5);
-        $filename = sha1(uniqid(rand())) . '.svg';
-        $filePath = $this -> uploadPath . '/' . SvgAvatarFactory::AVATAR_DIR . '/' . $filename;
-        $this -> fileSystemHelper -> write($filePath, $svg);
-        $user -> setAvatar($filename);
+            /* firstname : */ $user -> setFirstname($faker -> firstName);
+            /* lastname  : */ $user -> setLastname($faker -> lastName);
+            /* email     : */ $user -> setEmail($faker -> email);
+            /* city      : */ $user -> setCity($faker -> city);
+            /* password  : */ $user -> setPassword(password_hash($faker -> password, PASSWORD_DEFAULT));
+            /* birthdate : */ $date = rand(1950, 2000).'-'.$faker ->month.'-'.$faker -> dayOfMonth;
+                             $user -> setBirthdate(new \DateTime($date));
 
 
-
-                $promotions = $this -> getReferences('Promotion');
-                $promotions = $faker -> randomElements($promotions, rand(1, 2));
-
-                foreach ($promotions as $promotion) {
-                    $user -> addPromotion($promotion);
-                }
-//                $manager -> persist($promotion);
-//                dd($promotions);
+            $svg = $this -> svgAvatarFactory -> getAvatar(2, 5);
+            $filename = sha1(uniqid(rand())) . '.svg';
+            $filePath = $this -> uploadPath . '/' . SvgAvatarFactory::AVATAR_DIR . '/' . $filename;
+            $this -> fileSystemHelper -> write($filePath, $svg);
+            $user -> setAvatar($filename);
 
 
 
-//        $manager->flush();
+                    $promotions = $this -> getReferences('Promotion');
+                    $promotions = $faker -> randomElements($promotions, rand(1, 2));
+
+                    foreach ($promotions as $promotion) {
+                        $user -> addPromotion($promotion);
+                    }
+        }
+        $manager->flush();
     }
 }
