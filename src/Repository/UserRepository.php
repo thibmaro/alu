@@ -32,6 +32,14 @@ class UserRepository extends ServiceEntityRepository
                ->andWhere('p.degree = :degree_id')
                ->setParameter('degree_id', $degree);
        }
+
+       if ($year) {
+           $qb
+               ->andWhere('p.year = :year_id')
+               ->setParameter('year_id', $year);
+       }
+       return $qb -> getQuery() -> getResult();
+
     }
     // /**
     //  * @return User[] Returns an array of User objects

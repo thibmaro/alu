@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Repository\DegreeRepository;
+use App\Repository\UserRepository;
 use App\Repository\YearRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,7 +20,7 @@ class HomeController extends AbstractController
      */
     public function index(DegreeRepository $degreeRepository,
                             YearRepository $yearRepository,
-                            Request $request)
+                            Request $request, UserRepository $userRepository)
     {
         // Affichage du formulaire de recherche
         $templateData = [];
@@ -33,6 +34,10 @@ class HomeController extends AbstractController
 
         $templateData['degrees'] = $degreeRepository -> findBy([], ['name' => 'ASC']);
         $templateData['years'] = $yearRepository -> findBy([], ['title' => 'DESC']);
+        $templateData['results'] = $userRepository -> search($degree, $year);
+
+        $results = $userRepository -> search($degree, $year);
+//        dd($results);
 
         return $this -> render('home.html.twig', $templateData);
     }

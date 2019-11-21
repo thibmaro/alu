@@ -26,7 +26,19 @@
         </select>
 
         <input type="submit" value="Rechercher">
-    </form>
 
+        <section id="search-results">
+            {% if results is defined %}
+                <ul>
+                    {% for user in results %}
+                        <li>
+                            {{ user.lastname }} {{ user.firstname }}
+                        </li>
+                    {% endfor %}
+                </ul>
+{#                {{ dump(results) }}#}
+            {% endif %}
+        </section>
+    </form>
 {% endblock %}
 
