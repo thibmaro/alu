@@ -29,15 +29,13 @@ class HomeController extends AbstractController
         if ($request -> request -> count()) {
             $degree = $request -> request -> get('degree');
             $year = $request -> request -> get('year');
-
+            $templateData['results'] = $userRepository -> search($degree, $year);
         }
 
         $templateData['degrees'] = $degreeRepository -> findBy([], ['name' => 'ASC']);
         $templateData['years'] = $yearRepository -> findBy([], ['title' => 'DESC']);
-        $templateData['results'] = $userRepository -> search($degree, $year);
 
-        $results = $userRepository -> search($degree, $year);
-//        dd($results);
+
 
         return $this -> render('home.html.twig', $templateData);
     }
