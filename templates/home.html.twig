@@ -32,7 +32,9 @@
                 <ul>
                     {% for user in results %}
                         <li>
-                            {{ user.lastname }} {{ user.firstname }} {{ user.slug }}
+                            <a href="{{ path('alumni.index', {"id": user.id, "slug": user.slug}) }}">
+                                {{ user.lastname }} {{ user.firstname }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
